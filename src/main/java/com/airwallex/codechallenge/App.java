@@ -5,6 +5,7 @@ import com.airwallex.codechallenge.market.Markets;
 import com.airwallex.codechallenge.market.UnsupportedRateMessageException;
 import com.airwallex.codechallenge.message.RateMessage;
 import com.airwallex.codechallenge.monitor.RateChangeMonitor;
+import com.airwallex.codechallenge.monitor.TrendMonitor;
 import com.airwallex.codechallenge.reader.Reader;
 
 import java.io.IOException;
@@ -19,11 +20,15 @@ public class App {
         RateChangeMonitor rateChangeMonitor = new RateChangeMonitor(markets);
         rateChangeMonitor.registerAlarm(stdOutAlarm);
 
+        TrendMonitor trendMonitor = new TrendMonitor(markets);
+        trendMonitor.registerAlarm(stdOutAlarm);
+
         Reader reader = new Reader();
 
         reader.read(args[0]).forEach(rateMessage -> {
             updateMarket(markets, rateMessage);
             rateChangeMonitor.process(rateMessage);
+            trendMonitor.process(rateMessage);
         });
     }
 

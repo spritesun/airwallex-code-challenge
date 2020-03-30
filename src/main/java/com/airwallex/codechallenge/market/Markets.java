@@ -7,16 +7,12 @@ import java.util.Map;
 import java.util.OptionalDouble;
 
 /**
- * Quotation stores multiple markets for each currency pair.
+ * Markets stores multiple markets for each currency pair.
  */
 
 public class Markets {
 
-    private Map<String, Market> markets;
-
-    public Markets() {
-        this.markets = new HashMap<>();
-    }
+    private Map<String, Market> markets = new HashMap<>();
 
     public void append(RateMessage rateMessage) throws UnsupportedRateMessageException {
         Market market = findOrCreateMarket(rateMessage.getCurrencyPair());
@@ -36,4 +32,7 @@ public class Markets {
         return findOrCreateMarket(currencyPair).getAverageRate();
     }
 
+    public Trend getTrend(String currencyPair) {
+        return findOrCreateMarket(currencyPair).getTrend();
+    }
 }

@@ -9,3 +9,6 @@
 { "timestamp": 1554933792.023, "currencyPair": "CNYAUD", "rate": 0.39281 }
 { "timestamp": 1554933793.023, "currencyPair": "CNYAUD", "rate": 0.39281 }
 { "timestamp": 1554933794.023, "currencyPair": "CNYAUD", "rate": 0.59281 }
+{ "timestamp": 1554933794.053, "currencyPair": "USDAUD", "rate": 1.67892 }
+{ "timestamp": 1554933795.023, "currencyPair": "CNYAUD", "rate": 0.59281 }
+{ "timestamp": 1554933795.053, "currencyPair": "USDAUD", "rate": 2.67892 }

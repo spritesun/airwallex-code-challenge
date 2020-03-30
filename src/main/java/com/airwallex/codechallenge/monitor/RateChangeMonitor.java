@@ -14,11 +14,10 @@ public class RateChangeMonitor implements Monitor {
     private static final double CHANGE_THRESHOLD = 0.1d;
 
     private final Markets markets;
-    private List<Alarm> alarms;
+    private List<Alarm> alarms = new ArrayList<>();
 
     public RateChangeMonitor(Markets markets) {
         this.markets = markets;
-        this.alarms = new ArrayList<>();
     }
 
     public void process(RateMessage message) {
