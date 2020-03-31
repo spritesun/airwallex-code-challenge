@@ -17,14 +17,10 @@ public class Market {
     private OptionalDouble averageRate;
     private final LinkedList<RateMessage> messages = new LinkedList<>();
     private Instant lastUpdatedTime;
-    private Trend trend;
+    private Trend trend = new Trend();
 
     public Market(String currencyPair) {
         this.currencyPair = currencyPair;
-    }
-
-    public OptionalDouble getAverageRate() {
-        return averageRate;
     }
 
     public void append(RateMessage rateMessage) throws UnsupportedRateMessageException {
@@ -36,34 +32,20 @@ public class Market {
         updateAverageRate();
     }
 
-    // Assume rateMessage will post every 1 second
-    private void updateTrend(RateMessage rateMessage) {
-        if (messages.isEmpty()) {
-            return;
-        }
-        if (rateMessage.getRate() > messages.getLast().getRate()) {
-            if (trend == null) {
-                trend = new Trend(Trend.State.RISING, 1);
-            } else if (trend.getState() == Trend.State.RISING) {
-                trend = new Trend(Trend.State.RISING, trend.getDuration() + 1);
-            } else {
-                trend = new Trend(Trend.State.FALLING, 1);
-            }
-        } else if (rateMessage.getRate() < messages.getLast().getRate()) {
-            if (trend == null) {
-                trend = new Trend(Trend.State.FALLING, 1);
-            } else if (trend.getState() == Trend.State.RISING) {
-                trend = new Trend(Trend.State.FALLING, 1);
-            } else {
-                trend = new Trend(Trend.State.FALLING, trend.getDuration() + 1);
-            }
-        } else {
-            trend = null;
-        }
+    public OptionalDouble getAverageRate() {
+        return averageRate;
     }
 
     public Trend getTrend() {
         return trend;
+    }
+
+    private void updateTrend(RateMessage rateMessage) {
+        if (messages.isEmpty()) {
+            return;
+        }
+
+        trend.update(rateMessage.getRate().compareTo(messages.getLast().getRate()));
     }
 
     private void validateRateMessage(RateMessage rateMessage) throws UnsupportedRateMessageException {
@@ -89,6 +71,4 @@ public class Market {
     private boolean messageExpired(RateMessage message) {
         return message.getTimestamp().plusSeconds(TIME_WINDOW_IN_SECONDS).isBefore(lastUpdatedTime);
     }
-
-
 }

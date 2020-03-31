@@ -20,7 +20,7 @@ public class Reader {
         return read(Files.lines(Paths.get(filename)));
     }
 
-    private Stream<RateMessage> read(Stream<String> lines) {
+    public Stream<RateMessage> read(Stream<String> lines) {
         return lines.map(this::parse);
     }
 

@@ -44,7 +44,7 @@ public class TrendMonitor implements Monitor {
     }
 
     private boolean trendLastLongEnough(Trend trend) {
-        return trend.getDuration() >= TREND_THRESHOLD_IN_SECONDS;
+        return (trend.getState() != Trend.State.NO_CHANGE) && trend.getDuration() >= TREND_THRESHOLD_IN_SECONDS;
     }
 
     @Override

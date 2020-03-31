@@ -7,6 +7,14 @@ public class RateMessage {
     private String currencyPair;
     private Double rate;
 
+    public RateMessage() {
+    }
+    public RateMessage(Instant timestamp, String currencyPair, Double rate) {
+        this.timestamp = timestamp;
+        this.currencyPair = currencyPair;
+        this.rate = rate;
+    }
+
     public Instant getTimestamp() {
         return timestamp;
     }

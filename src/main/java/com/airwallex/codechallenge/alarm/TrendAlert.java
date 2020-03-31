@@ -21,8 +21,19 @@ public class TrendAlert implements Alert {
     public TrendAlert(Instant timestamp, String currencyPair, Trend trend) {
         this.timestamp = timestamp;
         this.currencyPair = currencyPair;
-        this.alert = (trend.getState() == Trend.State.RISING ? "rising" : "falling");
+        this.alert = convertStateToString(trend);
         this.second = trend.getDuration();
+    }
+
+    private String convertStateToString(Trend trend) {
+        switch (trend.getState()) {
+            case RISING:
+                return "rising";
+            case FALLING:
+                return "falling";
+            default:
+                return "nochange";
+        }
     }
 
     @Override
